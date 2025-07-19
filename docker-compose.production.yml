@@ -21,12 +21,12 @@ services:
       - static_volume:/backend_static
     depends_on:
       - db
-    user: "0:0"  # root, чтобы были права на volume
+    user: "0:0"
 
   frontend:
     image: mordovind/taski_frontend
     env_file: .env
-    command: sh -c "cp -r /app/build/. /frontend_static/ && tail -f /dev/null"
+    command: cp -r /app/build/. /frontend_static/
     volumes:
       - static_volume:/frontend_static
 

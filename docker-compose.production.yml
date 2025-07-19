@@ -13,6 +13,7 @@ services:
 
   backend:
     image: mordovind/taski_backend
+    env_file: .env
     volumes:
       - static_volume:/backend_static
     depends_on:

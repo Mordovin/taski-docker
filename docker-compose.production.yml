@@ -24,9 +24,9 @@ services:
     user: "0:0"
 
   frontend:
-    image: mordovind/taski_frontend
-    env_file: .env
-    command: cp -r /app/build/. /frontend_static/
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     volumes:
       - static_volume:/frontend_static
 

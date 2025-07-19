@@ -11,4 +11,4 @@ COPY . .
 
 RUN npm run build
 
-CMD ["npx", "-y", "http-server", "-p", "8000", "/app/build"]
+RUN mkdir -p /frontend_static && cp -r build/* /frontend_static

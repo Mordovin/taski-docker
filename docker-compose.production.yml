@@ -24,8 +24,7 @@ services:
     user: "0:0"
 
   frontend:
-    build:
-      image: mordovind/taski_frontend
+    image: mordovind/taski_frontend:latest
     volumes:
       - static_volume:/frontend_static
 

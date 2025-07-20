@@ -130,5 +130,13 @@ STATIC_ROOT = os.environ.get('STATIC_ROOT', BASE_DIR / 'collected_static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
+    'http://localhost:3000',
+    "https://mordovind.zapto.org",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://mordovind.zapto.org',
+]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

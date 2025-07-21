@@ -1,14 +1,12 @@
 FROM node:18
-
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 
-RUN npm ci
+RUN npm install
 
 COPY . .
+RUN npm run build 
 
-RUN npm run build
-
-RUN mkdir -p /frontend_static && cp -r build/* /frontend_static/
-
+CMD ["npx", "-y", "http-server", "-p", "8000", "/app/build"]

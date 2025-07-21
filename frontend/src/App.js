@@ -4,10 +4,31 @@ import TaskEditModal from "./components/TaskEditModal";
 import Task from "./components/Task";
 import TabList from "./components/TabList";
 
+// Получение CSRF-токена из cookie
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+// Установка глобальных заголовков для axios
+axios.defaults.headers.common["X-CSRFToken"] = getCookie("csrftoken");
+axios.defaults.withCredentials = true;
+
+// Проверка content-type
 axios.interceptors.response.use(function (response) {
-  if (response.headers['content-type'] !== 'application/json') {
-    alert('unsupport data format in server response')
-    return Promise.reject(new Error('unsupport data format'));
+  if (response.headers["content-type"] !== "application/json") {
+    alert("unsupport data format in server response");
+    return Promise.reject(new Error("unsupport data format"));
   }
   return response;
 });
@@ -34,7 +55,7 @@ const App = () => {
       : axios.post("/api/tasks/", item);
 
     request
-      .then((res) => {
+      .then(() => {
         refreshList();
         setActiveTask(null);
       })

@@ -4,7 +4,7 @@ import TaskEditModal from "./components/TaskEditModal";
 import Task from "./components/Task";
 import TabList from "./components/TabList";
 
-// Получение CSRF-токена из cookie
+// === Получение CSRF-токена из cookie ===
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -20,13 +20,15 @@ function getCookie(name) {
   return cookieValue;
 }
 
+// === Установка глобальных настроек для axios ===
+axios.defaults.headers.common["X-CSRFToken"] = getCookie("csrftoken");
 axios.defaults.withCredentials = true;
 
-// Проверка content-type
 axios.interceptors.response.use(function (response) {
-  if (response.headers["content-type"] !== "application/json") {
-    alert("unsupport data format in server response");
-    return Promise.reject(new Error("unsupport data format"));
+  const contentType = response.headers["content-type"];
+  if (!contentType || !contentType.includes("application/json")) {
+    alert("Unsupported data format in server response");
+    return Promise.reject(new Error("Unsupported data format"));
   }
   return response;
 });
@@ -36,18 +38,16 @@ const App = () => {
   const [taskList, setTaskList] = useState([]);
   const [activeTask, setActiveTask] = useState(null);
 
-  useEffect(() => {
-    // Установим CSRF токен при монтировании
-    axios.defaults.headers.common["X-CSRFToken"] = getCookie("csrftoken");
-    refreshList();
-  }, []);
-
   const refreshList = () => {
     axios
       .get("/api/tasks/")
       .then((res) => setTaskList(res.data))
       .catch(console.error);
   };
+
+  useEffect(() => {
+    refreshList();
+  }, []);
 
   const handleSubmit = (item) => {
     const request = item.id

@@ -11,6 +11,4 @@ COPY . .
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN mkdir -p /backend_static && chmod -R 755 /backend_static
-
 ENTRYPOINT ["/entrypoint.sh"]

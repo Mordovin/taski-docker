@@ -105,5 +105,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://https://mordovind.zapto.org'
+    'http://mordovind.zapto.org:3000',
+    'https://mordovind.zapto.org:3000',
 ]

@@ -3,11 +3,11 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -18,9 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -34,7 +33,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'taski_backend.urls'
 
 TEMPLATES = [
     {
@@ -52,7 +51,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'taski_backend.wsgi.application'
 
 # Database
 DATABASES = {
@@ -62,19 +61,24 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER', 'django_user'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'MySecretPassword'),
         'HOST': os.getenv('DB_HOST', 'db'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'PORT': os.getenv('DB_PORT', 5432),
     }
 }
 
 # REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # <- важно для тестов
+        'rest_framework.permissions.IsAuthenticated',
     ],
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
     ],
+
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+
 }
 
 # Password validation
@@ -110,16 +114,3 @@ MEDIA_ROOT = os.getenv('MEDIA_ROOT', BASE_DIR / 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# CORS and CSRF
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'https://mordovind.zapto.org',
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://mordovind.zapto.org',
-]
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True

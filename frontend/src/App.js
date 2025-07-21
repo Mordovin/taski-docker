@@ -20,8 +20,6 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// Установка глобальных заголовков для axios
-axios.defaults.headers.common["X-CSRFToken"] = getCookie("csrftoken");
 axios.defaults.withCredentials = true;
 
 // Проверка content-type
@@ -38,16 +36,18 @@ const App = () => {
   const [taskList, setTaskList] = useState([]);
   const [activeTask, setActiveTask] = useState(null);
 
+  useEffect(() => {
+    // Установим CSRF токен при монтировании
+    axios.defaults.headers.common["X-CSRFToken"] = getCookie("csrftoken");
+    refreshList();
+  }, []);
+
   const refreshList = () => {
     axios
       .get("/api/tasks/")
       .then((res) => setTaskList(res.data))
       .catch(console.error);
   };
-
-  useEffect(() => {
-    refreshList();
-  }, []);
 
   const handleSubmit = (item) => {
     const request = item.id

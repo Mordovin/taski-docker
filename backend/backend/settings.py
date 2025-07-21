@@ -1,17 +1,13 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET')
+SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 INSTALLED_APPS = [
     'api.apps.ApiConfig',
@@ -100,7 +96,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.environ.get('STATIC_ROOT', BASE_DIR / 'collected_static')
+STATIC_ROOT = os.getenv('STATIC_ROOT', BASE_DIR / 'collected_static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

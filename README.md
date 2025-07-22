@@ -12,7 +12,7 @@
 - Taski: https://mordovind.zapto.org/
 
 ### Технологический стек
-[![Main Kittygram workflow](https://github.com/Mordovin/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/Mordovin/kittygram_final/actions/workflows/main.yml)
+[![Main Taski workflow](https://github.com/Mordovin/taski-docker/actions/workflows/main.yml/badge.svg)](https://github.com/Mordovin/taski-docker/actions/workflows/main.yml)
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat&logo=Python&logoColor=56C0C0&color=cd5c5c)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/-Django-464646?style=flat&logo=Django&logoColor=56C0C0&color=0095b6)](https://www.djangoproject.com/)
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat&logo=Django%20REST%20Framework&logoColor=56C0C0&color=cd5c5c)](https://www.django-rest-framework.org/)
